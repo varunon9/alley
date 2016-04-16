@@ -1,0 +1,84 @@
+@font-face {
+	font-family: abel;
+	src: url('Abel-Regular.ttf');
+}
+html {
+	height: 100%;
+}
+body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-size: 1em;
+	font-family: abel;
+	text-align: left;
+	overflow-X: hidden;
+}
+body a {
+	color: black;
+}
+#header {
+	position: relative;
+	width: 100%;
+	height: 15%;
+	background-color: #009688;
+}
+.logo {
+	position: absolute;
+	top: 15%;
+	left: 3%;
+	width: 15%;
+	font-size: 2.5em;
+}
+.login {
+	position: absolute;
+	top: 30%;
+	left: 40%;
+	width: 42%;
+}
+.login form {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+.login form input{
+	margin-right: 2%;
+}
+#main {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+#searchView {
+	width: 100%;
+	padding: 1%;
+}
+#searchResult {
+	width: 100%;
+	height: 60%;
+	overflow-Y: scroll;
+}
+#searchResult a {
+	text-decoration: none;
+}
+#searchResult ul {
+	list-style-type: none;
+}
+#footer {
+	position: relative;
+	width: 100%;
+	height: 10%;
+	background-color: #009688;
+	text-align: center;
+	padding: 2%;
+}
+#footer ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+#footer ul li{
+	display: inline;
+	margin-right: 1%;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "alley",
+  "version": "1.0.0",
+  "description": "\"\"",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "varun kumar <varunon9@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "compression": "^1.6.0",
+    "express": "^4.13.3",
+    "fs": "0.0.2"
+  }
+}
