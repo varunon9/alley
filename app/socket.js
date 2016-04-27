@@ -2,6 +2,8 @@
     * Created by: Varun kumar
     * Date: 30 march, 2016
 **/
+
+require('./database');
 module.exports = function(ioServer, socket) {
 	console.log('A connection made by ' + socket.id);
 	socket.on('disconnect', function() {

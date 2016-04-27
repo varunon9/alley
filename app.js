@@ -5,6 +5,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 var io = require('socket.io');
 
@@ -15,8 +16,12 @@ app.use(bodyParser.urlencoded({
     limit: '2mb',
     extended: true
 })); // support encoded bodies
+app.use(cookieParser('alleyVarunon9_Secret@Key'));
 
+require('./app/api/authentication')(express, app);
 require('./router/routes')(app);
+require('./app/api/user')(app);
+require('./app/redis');
 
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);

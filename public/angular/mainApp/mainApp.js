@@ -7,7 +7,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation']);
 mainApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-        	templateUrl: 'users',
+        	templateUrl: '/home',
         	controller: 'navigationController'
         })
         .otherwise({ 

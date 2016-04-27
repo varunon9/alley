@@ -2,11 +2,24 @@
     * Created by: Varun kumar
     * Date: 30 march, 2016
 **/
-module.exports = function(app) {
-	app.get('/', function(req, res) {
-		res.render('./index.html');
+module.exports = function (app) {
+	app.get('/', function (req, res) {
+        var username = req.signedCookies.username;
+        console.log(username + ' from route');
+        if (username != null) {
+            //not working
+            res.render('./index.html', {username: useranme});
+        } else {
+            res.redirect('/signup');
+        }
 	});
-    app.get('/users', function(req, res) {
-		res.render('./users.html');
+    app.get('/home', function (req, res) {
+        res.render('./home.html');
+    });
+    app.get('/signup', function (req, res) {
+        res.render('./signup.html');
 	});
+    app.get('/about', function (req, res) {
+        res.render('./about.html');
+    });
 }
