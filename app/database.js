@@ -38,12 +38,13 @@ var mongoApi = {
 			return user;
 		});
 	},
-	deleteUser: function (username) {
+	deleteUser: function (username, successCallback) {
 		User.findOneAndRemove({username: username}, function (err) {
 			if (err) {
 				throw err;
 			}
 			console.log('user ' + username + ' deleted');
+			successCallback();
 		});
 	},
 	updateUserStatus: function (username, status) {

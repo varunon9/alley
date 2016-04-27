@@ -11,18 +11,21 @@ module.exports = function (app) {
         var successCallback = function () {
             res.cookie('username', user.username, {
                 signed: true,
-                maxAge: 30 * 24 * 3600
+                maxAge: 3 * 30 * 24 * 3600
             });
-            res.redirect('/');
+            res.send('success');
         };
         var errorCallback = function () {
             res.send('exists');
-        }
+        };
         mongoApi.addUser(user, errorCallback, successCallback);
     });
     app.get('/logout', function (req, res) {
-        console.log(req.headers.cookie);
-        //res.clearCookie('username');
-        res.redirect('/about');
+        var username = req.signedCookies.username; 
+        var successCallback = function () {
+            res.clearCookie('username');
+            res.redirect('/about');
+        };
+        mongoApi.deleteUser(username, successCallback);
     });
 };

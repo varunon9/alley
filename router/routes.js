@@ -7,8 +7,7 @@ module.exports = function (app) {
         var username = req.signedCookies.username;
         console.log(username + ' from route');
         if (username != null) {
-            //not working
-            res.render('./index.html', {username: useranme});
+            res.render('./index.html', {username: username});
         } else {
             res.redirect('/signup');
         }

@@ -4,7 +4,7 @@
 **/
 var signup = angular.module('signup', []);
 
-signup.controller('signupController', function ($scope, $http) {
+signup.controller('signupController', function ($scope, $http, $window) {
     $scope.disableSubmitButton = false;
 	$scope.user = {
 		username: '',
@@ -24,6 +24,9 @@ signup.controller('signupController', function ($scope, $http) {
             if (response.data == 'exists') {
                 $scope.disableSubmitButton = false;
                 console.log('username ' + $scope.user.username + ' has been taken.');
+            } else {
+                console.log('success');
+                $window.location.href = '/';
             }
     	}, function errorCallback (response) {
             console.error('error: ' + response);
