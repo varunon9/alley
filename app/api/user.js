@@ -28,4 +28,8 @@ module.exports = function (app) {
         };
         mongoApi.deleteUser(username, successCallback);
     });
+    app.post('/getUsername', function (req, res) {
+        var username = req.signedCookies.username;
+        res.send(username);
+    });
 };

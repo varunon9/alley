@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser('alleyVarunon9_Secret@Key'));
 
 require('./app/api/authentication')(express, app);
-require('./router/routes')(app);
 require('./app/api/user')(app);
 require('./app/redis');
+require('./router/routes')(app);
 
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);

@@ -12,24 +12,38 @@ client.on('connect', function () {
     module.exports = {
         addUserRedis: function (username, id) {
             client.select(index, function () {
-            	client.exists(username, function (err, reply) {
-            		if (reply === 1) {
-            			return 'exists';
-            		} else {
-            			client.set(username, id);
-            			return 'success';
-            		}
-            	});
+            	client.set(username, id);
+            	client.set(id, username);
             });
         },
         deleteUserIdRedis: function (username) {
         	client.select(index, function () {
-        		client.del(username);
+        		client.get(username, function (err, id) {
+        			client.del(id);
+        			client.del(username);
+        		});
         	});
         },
-        getUserIdRedis: function (username) {
+        deleteUsernameRedis: function (id) {
         	client.select(index, function () {
-        		client.get(username);
+        		client.get(id, function (err, username) {
+        			client.del(username);
+        			client.del(id);
+        		});
+        	});
+        },
+        getUserIdRedis: function (username, callback) {
+        	client.select(index, function () {
+        		client.get(username, function (err, id) {
+        			callback(id);
+        		});
+        	});
+        },
+        getUsernameRedis: function (id, callback) {
+        	client.select(index, function () {
+        		client.get(id, function (err, username) {
+        			callback(username);
+        		});
         	});
         } 
     };

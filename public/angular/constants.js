@@ -6,5 +6,8 @@
 var constants = {
     userSignup: {
     	url: '/user/signup'
+    },
+    getUsername: {
+    	url: '/getUsername'
     }
 };

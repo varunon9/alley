@@ -2,12 +2,24 @@
     * Created by: Varun kumar
     * Date: 30 march, 2016
 **/
+
+var redisApi = require('../app/redis');
+//console.log('redsApi' + redisApi.getUserIdRedis());
 module.exports = function (app) {
 	app.get('/', function (req, res) {
         var username = req.signedCookies.username;
         console.log(username + ' from route');
         if (username != null) {
-            res.render('./index.html', {username: username});
+            //to prevent opening of multiple tabs
+            /*var callback = function (id) {
+                if (id != null || id != '') {
+                    res.render('./index.html', {username: username});
+                } else {
+                    res.redirect('/about');
+                }
+            };
+            redisApi.getUserIdRedis(username, callback);*/
+            res.render('./index.html', {username: username})
         } else {
             res.redirect('/signup');
         }
