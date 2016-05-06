@@ -16,14 +16,27 @@
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                  <div class="mdl-layout__header-row">      
-                    <span class="mdl-layout-title">Hi <%= username %>!</span>          
+                    <span class="mdl-layout-title">Hi <%= username %>!</span> 
+                    <span class="mdl-layout-title" style="margin-left: 80%;">
+                        <a href="/logout">Logout</a>
+                    </span>          
                  </div>       
             </header>
-            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">Currently Online ({{ onlineUsers }})</span>
+            <div class="mdl-layout__drawer" ng-controller="navigationController">
+                <span>Currently Online ({{ onlineUsers.length - 1 }})</span>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Home</a>
-                    <a class="mdl-navigation__link" href="">About</a>  
+                    <!-- <a class="mdl-navigation__link" href="">Home</a>
+                    <a class="mdl-navigation__link" href="">About</a>  --> 
+                    <div ng-repeat="users in onlineUsers">
+                        <div class="onlineUsers" ng-if="username != users.username">
+                            {{ users.username }} &nbsp;&nbsp;&nbsp; {{ users.gender }}
+                            &nbsp;&nbsp;&nbsp; {{ users.age }} <br>
+                            <button class="mdl-button mdl-js-button mdl-button--primary"
+                            ng-click="connect($index)">
+                                <i class="material-icons">add</i>
+                            </button>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </div>
@@ -35,7 +48,7 @@
         <script src="/js/socket.io.js"></script>
         <script src="/angular/constants.js"></script>
         <script src="/angular/navigation.js"></script>
-        <script src="/angular/mainApp/mainAppController.js"></script>
         <script src="/angular/mainApp/mainApp.js"></script>
+        <script src="/angular/mainApp/homeController.js"></script>
     </body>
 </html>

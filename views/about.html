@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="about" ng-controller="aboutController">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,13 +22,16 @@
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">Currently Online ({{ onlineUsers }})</span>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Home</a>
-                    <a class="mdl-navigation__link" href="">Login</a>  
+                    <a class="mdl-navigation__link" href="/">Home</a>
+                    <a class="mdl-navigation__link" href="/signup">Login</a>  
                 </nav>
             </div>
         </div>
         <div ng-view class="pageAnimation" autoscroll="true">
         </div>
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="/angular/constants.js"></script>
         <script src="/bower_components/material-design-lite/material.min.js"></script>
+        <script src="/angular/about.js"></script>
     </body>
 </html>

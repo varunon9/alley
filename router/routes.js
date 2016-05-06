@@ -3,23 +3,23 @@
     * Date: 30 march, 2016
 **/
 
-var redisApi = require('../app/redis');
-//console.log('redsApi' + redisApi.getUserIdRedis());
+var redisApi;
+
 module.exports = function (app) {
 	app.get('/', function (req, res) {
+        redisApi = require('../app/redis');
         var username = req.signedCookies.username;
         console.log(username + ' from route');
         if (username != null) {
             //to prevent opening of multiple tabs
-            /*var callback = function (id) {
-                if (id != null || id != '') {
+            var callback = function (id) {
+                if (! id) {
                     res.render('./index.html', {username: username});
                 } else {
                     res.redirect('/about');
                 }
             };
-            redisApi.getUserIdRedis(username, callback);*/
-            res.render('./index.html', {username: username})
+            redisApi.getUserIdRedis(username, callback);
         } else {
             res.redirect('/signup');
         }

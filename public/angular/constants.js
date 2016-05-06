@@ -7,7 +7,13 @@ var constants = {
     userSignup: {
     	url: '/user/signup'
     },
-    getUsername: {
-    	url: '/getUsername'
+    getUserDetails: {
+    	url: '/getUserDetails'
+    },
+    getAllOnlineUsers: {
+    	url: '/getAllOnlineUsers'
+    },
+    getCountOfOnlineUsers: {
+    	url: '/getCountOfOnlineUsers'
     }
 };

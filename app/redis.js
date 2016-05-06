@@ -9,7 +9,7 @@ client.on('connect', function () {
     console.log('redis connected');
     //index = 11 for usernameIdPair
     var index = 11;
-    module.exports = {
+    var redisApi = {
         addUserRedis: function (username, id) {
             client.select(index, function () {
             	client.set(username, id);
@@ -47,4 +47,5 @@ client.on('connect', function () {
         	});
         } 
     };
+    module.exports = redisApi;
 });

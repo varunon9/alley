@@ -6,6 +6,7 @@ var signup = angular.module('signup', []);
 
 signup.controller('signupController', function ($scope, $http, $window) {
     $scope.disableSubmitButton = false;
+    $scope.onlineUsers = 0;
 	$scope.user = {
 		username: '',
 		age: '',
@@ -20,6 +21,7 @@ signup.controller('signupController', function ($scope, $http, $window) {
     $scope.userSignup = function () {
         $scope.disableSubmitButton = true;
     	reqUserSignup.data.user = $scope.user;
+        console.log($scope.user);
     	$http(reqUserSignup).then(function successCallback (response) {
             if (response.data == 'exists') {
                 $scope.disableSubmitButton = false;
@@ -32,4 +34,15 @@ signup.controller('signupController', function ($scope, $http, $window) {
             console.error('error: ' + response);
     	});
     };
+    var reqGetCountOfOnlineUsers = {
+        method: 'POST',
+        url: constants.getCountOfOnlineUsers.url,
+        headers: {},
+        data: {}
+    };
+    $http(reqGetCountOfOnlineUsers).then(function successCallback (response) {
+        $scope.onlineUsers = response.data.count;
+    }, function errorCallback (response) {
+            console.error('error: ' + response);
+    });
 });

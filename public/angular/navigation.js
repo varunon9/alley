@@ -6,26 +6,45 @@ var navigation = angular.module('navigation', []);
 
 navigation.controller('navigationController', function ($scope, $http, $window) {
     var socket = io();
-    var username;
+    var username, user;
     socket.on('connect', function () {
        console.log('connected'); 
     });
-    var reqUsername = {
+    socket.on('newUserConnected', function (user) {
+    	$scope.onlineUsers.push(user);
+    	$scope.$apply();
+    });
+    var reqUserDetails = {
     	method: 'POST',
-    	url: constants.getUsername.url,
+    	url: constants.getUserDetails.url,
     	data: {},
     	header: {}
     };
-    $http(reqUsername).then(function successCallback(response) {
-    	username = response.data;
+    $http(reqUserDetails).then(function successCallback (response) {
+    	user = response.data[0];
+    	username = user.username;
+    	$scope.username = username;
     	if (username == null || username == '') {
     		$window.location.href = '/signup';
     	} else {
-    		console.log(username);
-    		socket.emit('makeUsernameIdPair', username);
+    		socket.emit('makeUsernameIdPair', user);
     	}
-    }, function errorCallback(response) {
-    	console.log('error in getting username');
-    	console.log(response);
+    }, function errorCallback (response) {
+    	console.log('error in getting username: ' + response);
     });
+    var reqAllOnlineUsers = {
+    	method: 'POST',
+    	url: constants.getAllOnlineUsers.url,
+    	data: {},
+    	header: {}
+    };
+    $http(reqAllOnlineUsers).then(function successCallback (response) {
+    	$scope.onlineUsers = response.data;
+    	console.log($scope.onlineUsers);
+    }, function errorCallback (response) {
+    	console.log('error in getting allOnlineUsers: ' + response);
+    });
+    $scope.connect = function (index) {
+    	//console.log($scope.onlineUsers[index]);
+    };
 });

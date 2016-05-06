@@ -8,7 +8,7 @@ mainApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
         	templateUrl: '/home',
-        	controller: 'navigationController'
+        	controller: 'homeController'
         })
         .otherwise({ 
         	redirectTo : '/'

@@ -28,8 +28,27 @@ module.exports = function (app) {
         };
         mongoApi.deleteUser(username, successCallback);
     });
-    app.post('/getUsername', function (req, res) {
+    app.post('/getUserDetails', function (req, res) {
         var username = req.signedCookies.username;
-        res.send(username);
+        var callback = function (user) {
+            res.send(user);
+        };
+        mongoApi.getUser(username, callback);
+    });
+    app.post('/getAllOnlineUsers', function (req, res) {
+        var callback = function (onlineUsers) {
+            if (req.signedCookies.username != null) {
+                res.send(onlineUsers);
+            } else {
+                res.send('no signup');
+            }
+        };
+        mongoApi.getAllOnlineUsers(callback);
+    });
+    app.post('/getCountOfOnlineUsers', function (req, res) { 
+        var callback = function (count) {;
+            res.send(JSON.stringify({'count': count}));
+        };
+        mongoApi.getCountOfOnlineUsers(callback);
     });
 };

@@ -7,3 +7,16 @@ body {
 	margin: 0;
 	padding: 0;
 }
+.floatRight {
+	float: right;
+}
+body a {
+	color: inherit;
+	text-decoration: none;
+}
+.mdl-layout__drawer {
+	padding: 1em;
+}
+.onlineUsers button {
+	/*margin-top: 1em;*/
+}

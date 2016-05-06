@@ -13,6 +13,7 @@ var mongoApi = {
 			gender: user.gender,
 			status: true
 		});
+		console.log(newUser);
 		User.find({username: user.username}, function (err, user) {
 			if (err) {
 				throw err;
@@ -22,6 +23,7 @@ var mongoApi = {
 			} else {
 				newUser.save(function (err) {
 					if (err) {
+						console.log(err.name);
 						throw err;
 					}
 					console.log('user ' + newUser.username + ' added');
@@ -30,17 +32,19 @@ var mongoApi = {
 			}
 		});
 	},
-	getUser: function (username) {
+	getUser: function (username, callback) {
 		User.find({username: username}, function (err, user) {
 			if (err) {
+				console.log(err.name);
 				throw err;
 			}
-			return user;
+			callback(user);
 		});
 	},
 	deleteUser: function (username, successCallback) {
 		User.findOneAndRemove({username: username}, function (err) {
 			if (err) {
+				console.log(err.name);
 				throw err;
 			}
 			console.log('user ' + username + ' deleted');
@@ -53,27 +57,38 @@ var mongoApi = {
 		    {status: status},
 		    function (err, user) {
 		    	if (err) {
+		    		console.log(err.name);
 		    		throw err;
 		    	}
-		    	console.log('status updated ' + user.status);
 		    }
 		);
 	},
-	getAllUsers: function () {
+	getAllUsers: function (callback) {
 		User.find({}, function (err, users) {
 			if (err) {
+				console.log(err.name);
 				throw err;
 			}
-			return users;
+			callback(users);
 		});
 	},
-	getAllOnlineUsers: function () {
+	getAllOnlineUsers: function (callback) {
 	    User.find({status: true}, function (err, onlineUsers) {
 	    	if (err) {
+	    		console.log(err.name);
 	    		throw err;
 	    	}
-	    	return onlineUsers;
+	    	callback(onlineUsers);
 	    });
+	},
+	getCountOfOnlineUsers: function (callback) {
+		User.count({status: true}, function (err, count) {
+			if (err) {
+	    		console.log(err.name);
+	    		throw err;
+	    	}
+	    	callback(count);
+		});
 	}
 };
 module.exports = mongoApi;
