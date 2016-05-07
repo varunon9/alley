@@ -33,14 +33,22 @@
                             &nbsp;&nbsp;&nbsp; {{ users.age }} <br>
                             <button class="mdl-button mdl-js-button mdl-button--primary"
                             ng-click="connect($index)">
-                                <i class="material-icons">add</i>
+                                <i class="material-icons">message</i>
                             </button>
                         </div>
                     </div>
                 </nav>
             </div>
-        </div>
-        <div ng-view class="pageAnimation" autoscroll="true">
+            <div class="mdl-layout__content">
+                <div class="mdl-tabs mdl-js-tabs">
+                    <div class="mdl-tabs__tab-bar">
+                       <a href="#alleyBoat" class="mdl-tabs__tab is-active">alleyBoat</a>
+                    </div>
+                    <div class="mdl-tabs__panel is-active" id="alleyBoat">
+                       <p>You are chatting with alleyBoat</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <script src="/bower_components/angular/angular.js"></script>
         <script src="/bower_components/angular-route/angular-route.min.js"></script>

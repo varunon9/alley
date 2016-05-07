@@ -14,6 +14,12 @@ navigation.controller('navigationController', function ($scope, $http, $window) 
     	$scope.onlineUsers.push(user);
     	$scope.$apply();
     });
+    socket.on('userDisconnected', function (username) {
+    	$scope.onlineUsers = $scope.onlineUsers.filter(function (el) {
+    		return el.username != username;
+    	});
+    	$scope.$apply();
+    });
     var reqUserDetails = {
     	method: 'POST',
     	url: constants.getUserDetails.url,

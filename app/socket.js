@@ -18,6 +18,7 @@ module.exports = function(ioServer, socket) {
 	socket.on('disconnect', function() {
 	    console.log(socket.id + " disconnected");
 	    var callback = function (username) {
+	    	socket.broadcast.emit('userDisconnected', username);
 	    	mongoApi.updateUserStatus(username, false);
 	    	redisApi.deleteUsernameRedis(socket.id);
 	    };
