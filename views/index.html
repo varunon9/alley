@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="mainApp">
+<html lang="en" ng-app="mainApp" ng-controller="navigationController">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,11 +22,9 @@
                     </span>          
                  </div>       
             </header>
-            <div class="mdl-layout__drawer" ng-controller="navigationController">
+            <div class="mdl-layout__drawer">
                 <span>Currently Online ({{ onlineUsers.length - 1 }})</span>
-                <nav class="mdl-navigation">
-                    <!-- <a class="mdl-navigation__link" href="">Home</a>
-                    <a class="mdl-navigation__link" href="">About</a>  --> 
+                <nav class="mdl-navigation"> 
                     <div ng-repeat="users in onlineUsers">
                         <div class="onlineUsers" ng-if="username != users.username">
                             {{ users.username }} &nbsp;&nbsp;&nbsp; {{ users.gender }}
@@ -42,10 +40,28 @@
             <div class="mdl-layout__content">
                 <div class="mdl-tabs mdl-js-tabs">
                     <div class="mdl-tabs__tab-bar">
-                       <a href="#alleyBoat" class="mdl-tabs__tab is-active">alleyBoat</a>
+                       <a href="#alleyBot" class="mdl-tabs__tab is-active">alleyBot</a>
+                       <a ng-repeat="tab in chatTabs" href="#{{ tab }}" class="mdl-tabs__tab">
+                            {{ tab }}
+                        </a>
                     </div>
-                    <div class="mdl-tabs__panel is-active" id="alleyBoat">
-                       <p>You are chatting with alleyBoat</p>
+                    <div class="mdl-tabs__panel is-active" id="alleyBot">
+                       <p>You are chatting with alleyBot</p>
+                    </div>
+                    <div class="mdl-tabs__panel" ng-repeat="tab in chatTabs" id="{{ tab }}">
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"
+                        ng-click="disconnect($index)">
+                            <i class="material-icons">cross</i>
+                        </button>
+                        <!-- <div ng-repeat="message in tab + 'Messages'">
+                        </div> -->
+                        <div class="typeMessageArea">
+                            <input type="text" ng-model="typedMessage.value"/>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                            ng-click="sendMessage($index)">
+                                <i class="material-icons">send</i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
