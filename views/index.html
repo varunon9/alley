@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" ng-app="mainApp" ng-controller="navigationController">
     <head>
@@ -15,7 +16,8 @@
     <body>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
-                 <div class="mdl-layout__header-row">      
+                 <div class="mdl-layout__header-row">
+                 <!--change here to $scope.username-->      
                     <span class="mdl-layout-title">Hi <%= username %>!</span> 
                     <span class="mdl-layout-title" style="margin-left: 80%;">
                         <a href="/logout">Logout</a>
@@ -37,24 +39,25 @@
                     </div>
                 </nav>
             </div>
-            <div class="mdl-layout__content">
+            <div class="mdl-layout__content" ng-cloak>
                 <div class="mdl-tabs mdl-js-tabs">
                     <div class="mdl-tabs__tab-bar">
                        <a href="#alleyBot" class="mdl-tabs__tab is-active">alleyBot</a>
-                       <a ng-repeat="tab in chatTabs" href="#{{ tab }}" class="mdl-tabs__tab">
-                            {{ tab }}
+                       <a ng-repeat="tab in chatTabs" href="#{{ tab.username }}" class="mdl-tabs__tab">
+                            {{ tab.username }}
                         </a>
                     </div>
                     <div class="mdl-tabs__panel is-active" id="alleyBot">
                        <p>You are chatting with alleyBot</p>
                     </div>
-                    <div class="mdl-tabs__panel" ng-repeat="tab in chatTabs" id="{{ tab }}">
+                    <div class="mdl-tabs__panel" ng-repeat="tab in chatTabs" id="{{ tab.username }}">
                         <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"
                         ng-click="disconnect($index)">
                             <i class="material-icons">cross</i>
                         </button>
-                        <!-- <div ng-repeat="message in tab + 'Messages'">
-                        </div> -->
+                        <div ng-repeat="message in tab.message">
+                            {{message}}
+                        </div>
                         <div class="typeMessageArea">
                             <input type="text" ng-model="typedMessage.value"/>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"

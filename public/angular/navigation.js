@@ -7,7 +7,9 @@ var navigation = angular.module('navigation', []);
 navigation.controller('navigationController', function ($scope, $http, $window) {
     var socket = io();
     var username, user;
-    $scope.chatTabs = ['varunon9', 'vk1234'];
+    //chat tabs will contain array of usernames listed as tabname 
+    //and user messages
+    $scope.chatTabs = [];
     $scope.typedMessage = {};
     socket.on('connect', function () {
        console.log('connected'); 
@@ -25,14 +27,7 @@ navigation.controller('navigationController', function ($scope, $http, $window) 
     socket.on('chatFromServer', function (chat) {
     	var username = chat.username;
     	var message = chat.message;
-    	var index = $scope.chatTabs.indexOf(username);
-    	if (index == -1) {
-    		$scope.chatTabs.push(username);
-    	}
-    	var temp = username + 'Messages';
-    	var para = '<p class="server"'> + message + '</p>';
-    	$scope[temp] = $scope[temp] || [];
-    	$scope[temp].push(para);
+        checkAndPushMessage(username, message);
     });
     var reqUserDetails = {
     	method: 'POST',
@@ -42,13 +37,17 @@ navigation.controller('navigationController', function ($scope, $http, $window) 
     };
     $http(reqUserDetails).then(function successCallback (response) {
     	user = response.data[0];
-    	username = user.username;
-    	$scope.username = username;
-    	if (username == null || username == '') {
-    		$window.location.href = '/signup';
-    	} else {
-    		socket.emit('makeUsernameIdPair', user);
-    	}
+        if (user == undefined) {
+            $window.location.href = '/signup';
+        } else {
+            username = user.username;
+            $scope.username = username;
+            if (username == null || username == '') {
+                $window.location.href = '/signup';
+            } else {
+                socket.emit('makeUsernameIdPair', user);
+            }
+        }
     }, function errorCallback (response) {
     	console.log('error in getting username: ' + response);
     });
@@ -84,4 +83,23 @@ navigation.controller('navigationController', function ($scope, $http, $window) 
     	$scope[temp] = $scope[temp] || [];
     	$scope[temp].push(para);
     };
+    function checkAndPushMessage (username, message) {
+        message = "<span class='server'>" + message + "</span>";
+        var found = 0;
+        for (i in $scope.chatTabs) {
+            var obj = $scope.chatTabs[i];
+            if (obj.username == username) {
+                found = 1;
+                obj.message.push(message);
+                break;
+            }
+        }
+        if (found == 0) {
+            var tempObject = {};
+            tempObject.username = username;
+            tempObject.message = [];
+            tempObject.message.push(message);
+            $scope.chatTabs.push(tempObject);
+        }
+    }
 });
