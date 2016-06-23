@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en" ng-app="mainApp" ng-controller="navigationController">
+<html lang="en" ng-app="mainApp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,73 +8,63 @@
         <meta name="author" content="varunon9">
         <title>Alley - Anonymous chat application</title>
         <link rel="shortcut icon" href="images/logo.png">
-        <link rel="stylesheet" href="/bower_components/material-design-lite/material.min.css">
+        <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
         <link rel="stylesheet" href="css/main.css">
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <header class="mdl-layout__header">
-                 <div class="mdl-layout__header-row">
-                 <!--change here to $scope.username-->      
-                    <span class="mdl-layout-title">Hi <%= username %>!</span> 
-                    <span class="mdl-layout-title" style="margin-left: 80%;">
-                        <a href="/logout">Logout</a>
-                    </span>          
-                 </div>       
-            </header>
-            <div class="mdl-layout__drawer">
-                <span>Currently Online ({{ onlineUsers.length - 1 }})</span>
-                <nav class="mdl-navigation"> 
-                    <div ng-repeat="users in onlineUsers">
-                        <div class="onlineUsers" ng-if="username != users.username">
-                            {{ users.username }} &nbsp;&nbsp;&nbsp; {{ users.gender }}
-                            &nbsp;&nbsp;&nbsp; {{ users.age }} <br>
-                            <button class="mdl-button mdl-js-button mdl-button--primary"
-                            ng-click="connect($index)">
-                                <i class="material-icons">message</i>
-                            </button>
+        <div layout="column" style="height: 100%;">
+            <div ng-controller="navigationController" ng-cloak>
+                <md-toolbar class="md-primary">
+                    <div class="md-toolbar-tools">
+                        <div class="logoAndMenu">
+                            <i class="material-icons" ng-click="toggleSidenav();">
+                                dehaze
+                            </i>
+                            <span>Alley</span>
+                        </div>
+                        <div class="greeting">
+                            Welcome {{user.username}}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span ng-if="user.username != 'Guest'">
+                                <a href="/logout">Logout</a>
+                            </span>
                         </div>
                     </div>
-                </nav>
+                </md-toolbar>
+                <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="leftSidenav">
+                    <md-toolbar class="md-theme-light">
+                        <h1 class="md-toolbar-tools">Currently Online ({{onlineUsers.length}})</h1>
+                    </md-toolbar>
+                    <md-content>
+                        <div style="border-bottom: 1px solid #3f51b5; padding-left: 5%;">
+                            <i class="material-icons" style="vertical-align: text-top;">search</i>
+                            <input ng-model="searchInput" type="text" placeholder="search users" style="border: none;">
+                        </div>
+                        <md-list layout="column">
+                            <md-list-item class="md-2-line" ng-repeat="onlineUser in onlineUsers | filter: searchInput " ng-click="chatToOnlineUser(onlineUser)">
+                                <img ng-src="{{onlineUser.face}}" class="md-avatar" alt="{{onlineUser.username}}">
+                                <div class="md-list-item-text">
+                                    <h3>{{onlineUser.username}}</h3>
+                                    <h4>{{onlineUser.gender}} {{onlineUser.age}}</h4>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </md-content>
+                </md-sidenav>
             </div>
-            <div class="mdl-layout__content" ng-cloak>
-                <div class="mdl-tabs mdl-js-tabs">
-                    <div class="mdl-tabs__tab-bar">
-                       <a href="#alleyBot" class="mdl-tabs__tab is-active">alleyBot</a>
-                       <a ng-repeat="tab in chatTabs" href="#{{ tab.username }}" class="mdl-tabs__tab">
-                            {{ tab.username }}
-                        </a>
-                    </div>
-                    <div class="mdl-tabs__panel is-active" id="alleyBot">
-                       <p>You are chatting with alleyBot</p>
-                    </div>
-                    <div class="mdl-tabs__panel" ng-repeat="tab in chatTabs" id="{{ tab.username }}">
-                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"
-                        ng-click="disconnect($index)">
-                            <i class="material-icons">cross</i>
-                        </button>
-                        <div ng-repeat="message in tab.message">
-                            {{message}}
-                        </div>
-                        <div class="typeMessageArea">
-                            <input type="text" ng-model="typedMessage.value"/>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                            ng-click="sendMessage($index)">
-                                <i class="material-icons">send</i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <md-content flex ng-view ng-cloak style="height:100%; width: 100%;">
+            </md-content>
         </div>
         <script src="/bower_components/angular/angular.js"></script>
         <script src="/bower_components/angular-route/angular-route.min.js"></script>
-        <script src="/bower_components/material-design-lite/material.min.js"></script>
+        <script src="/bower_components/angular-material/angular-material.min.js"></script>
+        <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="/bower_components/angular-aria/angular-aria.min.js"></script>
         <script src="/js/socket.io.js"></script>
-        <script src="/angular/constants.js"></script>
-        <script src="/angular/navigation.js"></script>
-        <script src="/angular/mainApp/mainApp.js"></script>
-        <script src="/angular/mainApp/homeController.js"></script>
+        <script src="/angular/config/utils.js"></script>
+        <script src="/angular/controllers/navigation.js"></script>
+        <script src="/angular/controllers/signup.js"></script>
+        <script src="/angular/mainApp.js"></script>
     </body>
 </html>

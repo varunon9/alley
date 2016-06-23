@@ -1,82 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="signup" ng-controller="signupController">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0">
-        <meta name="description" content="Anonymous chat application">
-        <meta name="author" content="varunon9">
-        <title>Signup| Alley - Anonymous chat application</title>
-        <link rel="shortcut icon" href="images/logo.png">
-        <link rel="stylesheet" href="/bower_components/material-design-lite/material.min.css">
-        <link rel="stylesheet" href="css/signup.css">
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
-    </head>
-    <body>
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <header class="mdl-layout__header">
-                 <div class="mdl-layout__header-row">      
-                    <span class="mdl-layout-title">Alley</span>          
-                 </div>       
-            </header>
-            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">Currently Online ({{ onlineUsers }})</span>
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="/">Home</a>
-                    <a class="mdl-navigation__link" href="/about">About</a>  
-                </nav>
-            </div>
-            <div class="mdl-layout__content">
-                <div id="signupForm">
-                    <h1>Please signup</h1>
-                    <form ng-submit="userSignup()">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                           <input class="mdl-textfield__input" type="text" minlength="6" 
-                           autofocus required ng-model="user.username">
-                           <label class="mdl-textfield__label">
-                               Enter your username
-                           </label>
-                        </div>
-                        <br>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                           <input class="mdl-textfield__input" type="number" required min="10" max="100"
-                           ng-model="user.age">
-                           <label class="mdl-textfield__label">
-                               What's your age
-                           </label>
-                        </div>
-                        <br>
-                        <div class="mdl-textfield mdl-js-textfield">
-                            Gender:
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                <input type="radio" name="gender" class="mdl-radio__button" 
-                                checked ng-model="user.gender" value="male">
-                                <span class="mdl-radio__label">Male</span>
-                            </label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                <input type="radio" name="gender" class="mdl-radio__button"
-                                ng-model="user.gender" value="female">
-                                <span class="mdl-radio__label">Female</span>
-                            </label>
-                        </div>
-                        <br>
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                            ng-disabled="disableSubmitButton">
-                                <span ng-if="!disableSubmitButton">Submit</span>
-                                <span ng-if="disableSubmitButton">Processing...</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <script src="/bower_components/angular/angular.js"></script>
-        <script src="/bower_components/angular-route/angular-route.min.js"></script>
-        <script src="/bower_components/material-design-lite/material.min.js"></script>
-        <script src="/angular/constants.js"></script>
-        <script src="/angular/signup.js"></script>
-    </body>
-</html>
+<div id="signupForm">
+    <h2>Please signup</h2>
+    <form ng-submit="userSignup()" layout="column">
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Enter your username (minimum 6 length)</label>
+            <input ng-model="signupUser.username" autofocus required minlength="6" type="text">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>What's your age </label>
+            <input ng-model="signupUser.age" required min="10" max="100" type="number">
+        </md-input-container>
+        <md-radio-group ng-model="signupUser.gender" class="md-primary" layout="row">
+            <md-radio-button value="male">Male</md-radio-button>
+            <md-radio-button value="female">Female</md-radio-button>
+        </md-radio-group>
+        <md-button class="md-raised md-primary" ng-disabled="disableSubmitButton" type="button" ng-click="userSignup()">
+            <span ng-if="!disableSubmitButton">Submit</span>
+            <span ng-if="disableSubmitButton">Processing...</span>
+        </md-button>
+    </form>
+</div>

@@ -8,6 +8,11 @@ var mongoApi = require('../database');
 module.exports = function (app) {
     app.post('/user/signup', function (req, res) {
         var user = req.body.user;
+        //validating here
+        //angular username not binding, handle it
+        if (!user.username || !user.age || !user.gender) {
+            return res.send('incomplete details');
+        }
         var successCallback = function () {
             res.cookie('username', user.username, {
                 signed: true,
@@ -24,7 +29,7 @@ module.exports = function (app) {
         var username = req.signedCookies.username; 
         var successCallback = function () {
             res.clearCookie('username');
-            res.redirect('/about');
+            res.redirect('/');
         };
         mongoApi.deleteUser(username, successCallback);
     });
@@ -37,11 +42,7 @@ module.exports = function (app) {
     });
     app.post('/getAllOnlineUsers', function (req, res) {
         var callback = function (onlineUsers) {
-            if (req.signedCookies.username != null) {
-                res.send(onlineUsers);
-            } else {
-                res.send('no signup');
-            }
+            res.send(onlineUsers);
         };
         mongoApi.getAllOnlineUsers(callback);
     });

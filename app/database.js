@@ -13,7 +13,6 @@ var mongoApi = {
 			gender: user.gender,
 			status: true
 		});
-		console.log(newUser);
 		User.find({username: user.username}, function (err, user) {
 			if (err) {
 				throw err;
@@ -24,9 +23,9 @@ var mongoApi = {
 				newUser.save(function (err) {
 					if (err) {
 						console.log(err.name);
-						throw err;
+						throw err; //validation error handle it
+						errorCallback();
 					}
-					console.log('user ' + newUser.username + ' added');
 					successCallback();
 				});
 			}

@@ -1,0 +1,26 @@
+<div id="chat">
+    <div id="chatList">
+        <md-list flex>
+            <md-subheader class="md-no-sticky">
+                <h3>Currently Chatting</h3>
+            </md-subheader>
+        <md-list-item class="md-2-line" ng-repeat="user in chatList" ng-click="connect(user);">
+            <img ng-src="{{user.img}}" class="md-avatar" alt="{{user.username}}" />
+            <div class="md-list-item-text">
+                <h3>{{user.username}}</h3>
+                <h4>{{user.gender}} {{user.age}}</h4>
+            </div>
+        </md-list-item>
+    </div>
+    <div id="chatBox">
+        <div id="chatMessages">
+            <p ng-repeat="message in userUnderChat.message">{{message}}</p>
+        </div>
+        <div id="typeHere">
+            <i class="material-icons" style="vertical-align: text-top;">chat</i>
+            <form ng-submit="sendMessage();">
+                <input ng-model="typedMessage.value" type="text" placeholder="start typing your message" style="border: none;">
+            </form>
+        </div>
+    </div>
+</div>

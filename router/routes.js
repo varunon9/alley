@@ -3,17 +3,16 @@
     * Date: 30 march, 2016
 **/
 
-var redisApi;
+var redisApi = require('../app/redis');
 
 module.exports = function (app) {
 	app.get('/', function (req, res) {
-        redisApi = require('../app/redis');
         var username = req.signedCookies.username;
         console.log(username + ' from route');
         if (username != null) {
             //to prevent opening of multiple tabs
             var callback = function (id) {
-                if (! id) {
+                if (!id) {
                     res.render('./index.html', {username: username});
                 } else {
                     res.redirect('/about');
@@ -21,11 +20,14 @@ module.exports = function (app) {
             };
             redisApi.getUserIdRedis(username, callback);
         } else {
-            res.redirect('/signup');
+            res.render('./index.html', {username: username});
         }
 	});
     app.get('/home', function (req, res) {
         res.render('./home.html');
+    });
+    app.get('/chat', function (req, res) {
+        res.render('./chat.html');
     });
     app.get('/signup', function (req, res) {
         res.render('./signup.html');

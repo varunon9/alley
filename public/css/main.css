@@ -6,6 +6,7 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	font-family: "Helvetica", "Arial", sans-serif;
 }
 .floatRight {
 	float: right;
@@ -14,9 +15,131 @@ body a {
 	color: inherit;
 	text-decoration: none;
 }
-.mdl-layout__drawer {
-	padding: 1em;
+md-content, body, md-sidenav {
+	background: #eeeeee;
 }
-.onlineUsers button {
-	/*margin-top: 1em;*/
+md-sidenav input[type="text"] {
+	margin: 5% 5% 5% 0;
+	width: 80%;
+	font-size: 96%;
+	background: #eeeeee;
+}
+md-sidenav input[type="text"]:focus {
+	outline: none;
+}
+
+/*navigation*/
+i {
+	cursor: pointer;
+}
+i:focus {
+	outline: none;
+}
+.logoAndMenu {
+	position: absolute;
+	top: 20%;
+	left: 3%;
+}
+.logoAndMenu span {
+	vertical-align: super;
+	margin-left: 20px;
+}
+.greeting {
+	position: absolute;
+	top: 20%;
+	right: 5%;
+}
+
+/*signup*/
+header a {
+	text-decoration: none;
+	color: inherit;
+}
+#signupForm {
+	width: 30%;
+	margin-left: 35%;
+	text-align: center;
+}
+#signupForm md-input-container {
+	margin: 5px 0;
+}
+#signupForm .md-button {
+	margin: 20px 0;
+}
+.block {
+	display: block;
+}
+#signupForm h2 {
+	color: #37474F;
+}
+
+/*chat*/
+#chat {
+    width: 99%;
+    height: 97%;
+    overflow: hidden;
+}
+#chatList {
+    position: relative;
+	width: 20%;
+	float: left;
+	margin: 0;
+    height: 100%;
+    border-right: 1px solid silver;
+}
+#chatBox {
+    position: relative;
+	width: 79%;
+	float: right;
+	margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+#chatList md-list {
+	padding: 0;
+}
+.md-subheader {
+    background: #eee !important;
+}
+.md-subheader h3 {
+    padding: 0;
+    margin: 0;
+}
+#typeHere {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 98.5%;
+    padding: 2px;
+    border: 1px solid silver;
+    height: 9%;
+}
+#typeHere i {
+    margin-top: 17px;
+}
+#typeHere form {
+    display: inline;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    float: right;
+    width: 95%;
+    margin-right: 1%;
+}
+#typeHere input[type="text"] {
+    margin-left: 1%;
+    width: 100%;
+    height: 100%;
+    background: #eee;
+}
+#typeHere input[type="text"]:focus {
+    outline: none;
+}
+#chatMessages {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    overflow-Y: scroll;
 }

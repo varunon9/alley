@@ -24,4 +24,10 @@ module.exports = function(ioServer, socket) {
 	    };
 	    redisApi.getUsernameRedis(socket.id, callback);
 	});
+	socket.on('chatFromClient', function (sender, receiver, message) {
+        var callback = function (id) {
+            ioServer.to(id).emit('chatFromServer', sender, message);
+        };
+        redisApi.getUserIdRedis(receiver, callback);
+	});
 }

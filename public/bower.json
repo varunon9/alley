@@ -1,12 +1,12 @@
 {
-  "name": "public",
+  "name": "varun",
   "authors": [
     "varunon9 <varunon9@gmail.com>"
   ],
   "description": "",
   "main": "",
   "moduleType": [],
-  "license": "MIT",
+  "license": "ISC",
   "homepage": "",
   "private": true,
   "ignore": [
@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "angular": "^1.5.3",
-    "material-design-lite": "^1.1.3",
-    "angular-route": "^1.5.3"
+    "angular-route": "^1.5.3",
+    "angular-material": "^1.0.9"
   }
 }
