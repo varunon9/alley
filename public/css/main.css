@@ -323,6 +323,9 @@ header a {
     #typeHere i {
         margin-top: 10px;
     }
+    #typeHere form {
+        width: 83%;
+    }
 }
 @media (max-width: 320px) {
     body {
