@@ -6,7 +6,7 @@
                     <h3>Your Chat list</h3>
                 </md-subheader>
                 <div ng-repeat="user in chatList" class="list-item">
-                    <span ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
+                    <span id="crossSpanHidden" ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
                     <md-list-item class="md-2-line"
                                   ng-class="{'userUnderChat': user.username == userUnderChat.username}"
                                   ng-click="connect(user); toggleHiddenSidenav();">
@@ -34,7 +34,7 @@
                 <h3>Your Chat list</h3>
             </md-subheader>
             <div ng-repeat="user in chatList" class="list-item">
-                <span ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
+                <span id="crossSpan" ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
                 <md-list-item class="md-2-line"
                               ng-class="{'userUnderChat': user.username == userUnderChat.username}"
                               ng-click="connect(user);">
