@@ -15,7 +15,7 @@ var mongoApi = {
 		});
 		User.find({username: user.username}, function (err, user) {
 			if (err) {
-				throw err;
+				//throw err;
 			}
 			if (user.length > 0) {
 				errorCallback();
@@ -23,7 +23,7 @@ var mongoApi = {
 				newUser.save(function (err) {
 					if (err) {
 						console.log(err.name);
-						throw err; //validation error handle it
+						//throw err; //validation error handle it
 						errorCallback();
 					}
 					successCallback();
@@ -35,7 +35,7 @@ var mongoApi = {
 		User.find({username: username}, function (err, user) {
 			if (err) {
 				console.log(err.name);
-				throw err;
+				//throw err;
 			}
 			callback(user);
 		});
@@ -44,7 +44,7 @@ var mongoApi = {
 		User.findOneAndRemove({username: username}, function (err) {
 			if (err) {
 				console.log(err.name);
-				throw err;
+				//throw err;
 			}
 			console.log('user ' + username + ' deleted');
 			successCallback();
@@ -57,7 +57,7 @@ var mongoApi = {
 		    function (err, user) {
 		    	if (err) {
 		    		console.log(err.name);
-		    		throw err;
+		    		//throw err;
 		    	}
 		    }
 		);
@@ -66,7 +66,7 @@ var mongoApi = {
 		User.find({}, function (err, users) {
 			if (err) {
 				console.log(err.name);
-				throw err;
+				//throw err;
 			}
 			callback(users);
 		});
@@ -75,7 +75,7 @@ var mongoApi = {
 	    User.find({status: true}, function (err, onlineUsers) {
 	    	if (err) {
 	    		console.log(err.name);
-	    		throw err;
+	    		//throw err;
 	    	}
 	    	callback(onlineUsers);
 	    });
@@ -84,7 +84,7 @@ var mongoApi = {
 		User.count({status: true}, function (err, count) {
 			if (err) {
 	    		console.log(err.name);
-	    		throw err;
+	    		//throw err;
 	    	}
 	    	callback(count);
 		});

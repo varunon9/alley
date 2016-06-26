@@ -2,19 +2,33 @@
     <div id="chatList">
         <md-list flex>
             <md-subheader class="md-no-sticky">
-                <h3>Currently Chatting</h3>
+                <h3>Your Chat list</h3>
             </md-subheader>
-        <md-list-item class="md-2-line" ng-repeat="user in chatList" ng-click="connect(user);">
-            <img ng-src="{{user.img}}" class="md-avatar" alt="{{user.username}}" />
+        <md-list-item class="md-2-line" ng-repeat="user in chatList"
+                      ng-class="{'userUnderChat': user.username == userUnderChat.username}"
+                      ng-click="connect(user);">
+            <img ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
+                 class="md-avatar" alt="{{user.username}}" />
             <div class="md-list-item-text">
-                <h3>{{user.username}}</h3>
-                <h4>{{user.gender}} {{user.age}}</h4>
+                <h3>
+                    {{user.username}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
+                </h3>
+                <h4>{{user.gender}} &nbsp;&nbsp;{{user.age}} &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span ng-if="!user.newMessagesCount == 0">{{user.newMessagesCount}}</span>
+                </h4>
             </div>
         </md-list-item>
     </div>
     <div id="chatBox">
+        <div id="username">Chatting with {{userUnderChat.username}}</div>
         <div id="chatMessages">
-            <p ng-repeat="message in userUnderChat.message">{{message}}</p>
+            <p ng-repeat="message in userUnderChat.message" ng-class="message.class">
+                {{message.value}}
+                <span class="time">
+                    {{message.time | date: 'h:mm a'}}
+                </span>
+            </p>
         </div>
         <div id="typeHere">
             <i class="material-icons" style="vertical-align: text-top;">chat</i>

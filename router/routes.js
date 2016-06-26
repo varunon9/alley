@@ -9,19 +9,20 @@ module.exports = function (app) {
 	app.get('/', function (req, res) {
         var username = req.signedCookies.username;
         console.log(username + ' from route');
-        if (username != null) {
+        /*if (username != null) {
             //to prevent opening of multiple tabs
             var callback = function (id) {
                 if (!id) {
                     res.render('./index.html', {username: username});
                 } else {
-                    res.redirect('/about');
+                    res.status(403).send({redirect: '/about'});
                 }
             };
             redisApi.getUserIdRedis(username, callback);
         } else {
             res.render('./index.html', {username: username});
-        }
+        }*/
+        res.render('./index.html', {username: username});
 	});
     app.get('/home', function (req, res) {
         res.render('./home.html');
@@ -35,4 +36,4 @@ module.exports = function (app) {
     app.get('/about', function (req, res) {
         res.render('./about.html');
     });
-}
+};

@@ -46,6 +46,28 @@ var redisApi = {
 				callback(username);
 			});
 		});
-	}
+	},
+	doesUserExist: function (username, callback) {
+        client.select(index, function () {
+            client.get(username, function (err, id) {
+                if (id) {
+                    callback ();
+                } else {
+                    
+                }
+            });
+        });
+    },
+    broadcastIfUserIsNew: function (username, broadcastCallback, addCallback) {
+        client.select(index, function () {
+            client.get(username, function (err, id) {
+                if (id) {
+                } else {
+                    broadcastCallback();
+                }
+                addCallback();
+            });
+        });
+    }
 };
 module.exports = redisApi;

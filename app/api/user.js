@@ -4,6 +4,7 @@
 **/
 
 var mongoApi = require('../database');
+var redisApi = require('../redis');
 
 module.exports = function (app) {
     app.post('/user/signup', function (req, res) {
@@ -26,10 +27,13 @@ module.exports = function (app) {
         mongoApi.addUser(user, errorCallback, successCallback);
     });
     app.get('/logout', function (req, res) {
-        var username = req.signedCookies.username; 
+        var username = req.signedCookies.username;
+        if (username) {
+            redisApi.deleteUserIdRedis(username);
+        }
         var successCallback = function () {
             res.clearCookie('username');
-            res.redirect('/');
+            res.send({message: 'success'});
         };
         mongoApi.deleteUser(username, successCallback);
     });

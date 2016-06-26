@@ -11,9 +11,14 @@ module.exports = function(ioServer, socket) {
 	socket.on('makeUsernameIdPair', function (user) {
 		var username = user.username;
 		mongoApi.updateUserStatus(username, true);
-		redisApi.addUserRedis(username, socket.id);
-		//broadcast to all other users except current
-		socket.broadcast.emit('newUserConnected', user);
+		var addCallback = function () {
+            redisApi.addUserRedis(username, socket.id);
+        };
+		//broadcast to all other users except current only if this user is new
+		var broadcastCallback = function () {
+            socket.broadcast.emit('newUserConnected', user);
+        };
+        redisApi.broadcastIfUserIsNew(username, broadcastCallback, addCallback);
 	});
 	socket.on('disconnect', function() {
 	    console.log(socket.id + " disconnected");
@@ -28,6 +33,9 @@ module.exports = function(ioServer, socket) {
         var callback = function (id) {
             ioServer.to(id).emit('chatFromServer', sender, message);
         };
-        redisApi.getUserIdRedis(receiver, callback);
+        var callbackValidate = function () {
+            redisApi.getUserIdRedis(receiver.username, callback);
+        };
+        redisApi.doesUserExist(sender.username, callbackValidate);
 	});
 }

@@ -32,12 +32,15 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         var alleyUser = lsGet('alleyUser');
         if (alleyUser) {
             $rootScope.user = alleyUser;
+            $rootScope.socket.emit('makeUsernameIdPair', alleyUser);
         } else {
             $rootScope.user = {
                 username: 'Guest'
             };
         }
-        $rootScope.$watch('user', function () {
+        $rootScope.$watch(function () {
+            return $rootScope.user;
+        }, function () {
             var reqUserDetails = {
                 method: 'POST',
                 url: constants.getUserDetails.url,
@@ -46,10 +49,12 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
             };
             $http(reqUserDetails).then(function successCallback (response) {
                 user = response.data[0];
-                if (user && user.hasOwnProperty('username') && user ) {
+                if (user && user.hasOwnProperty('username')) {
                     $rootScope.user = user;
                     lsSet('alleyUser', user);
-                    $location.path('/chat');
+                    if ($location.path() != '/about') {
+                        $location.path('/chat');
+                    }
                 } else {
                     $rootScope.user = {
                         username: 'Guest'
@@ -107,16 +112,16 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
 
     })
     .controller('chatController', function ($rootScope, $scope, $http, $location) {
-        $scope.userUnderChat = {};
+        $rootScope.userUnderChat = {};
         $scope.connect = function (user) {
-            var username = user.username;
-            user.message = [];
-            $scope.userUnderChat = user;
+            user.newMessagesCount = 0;
+            $rootScope.userUnderChat = user;
         };
-        $scope.disconnect = function (user) {
+        $scope.disconnect = function (user, event) {
+            event.stopPropagation();
             //remove from chatList
-            if (user.username == $scope.userUnderChat.username) {
-                $scope.userUnderChat = {};
+            if (user.username == $rootScope.userUnderChat.username) {
+                $rootScope.userUnderChat = {};
             }
             for (var i = 0; i < $rootScope.chatList.length; i++) {
                 var u = $rootScope.chatList[i];
@@ -125,17 +130,21 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
                 }
             }
             $rootScope.chatList.splice(i, 1);
-            $scope.$apply();
         };
         $scope.sendMessage = function () {
-            if ($scope.userUnderChat.hasOwnProperty('username')) {
+            if ($rootScope.userUnderChat.hasOwnProperty('username')) {
                 var message = $scope.typedMessage.value;
                 $scope.typedMessage.value = '';
-                var sender = $rootScope.user.username;
-                var receiver = $scope.userUnderChat.username;
-                $rootScope.socket.emit('chatFromClient', sender, receiver, message);
-                var para = '<span class="client">' + message + '</span>';
-                $scope.userUnderChat.message.push(para);
+                var sender = $rootScope.user;
+                var receiver = $rootScope.userUnderChat;
+                var messageObject = {
+                    value: message,
+                    class: 'server',
+                    time: new Date()
+                };
+                $rootScope.socket.emit('chatFromClient', sender, receiver, messageObject);
+                messageObject.class = 'client';
+                $rootScope.userUnderChat.message.push(messageObject);
             } else {
                 $rootScope.alert('Please select any user to chat', 3000);
             }
@@ -143,24 +152,35 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         $rootScope.socket.on('chatFromServer', function (sender, message) {
             checkAndPushMessage(sender, message);
         });
-        function checkAndPushMessage (username, message) {
-            message = "<span class='server'>" + message + "</span>";
+        function checkAndPushMessage (sender, messageObject) {
             var found = 0;
-            for (i in $rootScope.chatList) {
+            for (var i in $rootScope.chatList) {
                 var obj = $rootScope.chatList[i];
-                if (obj.username == username) {
+                if (obj.username == sender.username) {
                     found = 1;
-                    obj.message.push(message);
+                    obj.message.push(messageObject);
+                    if (i != 0 && obj.username != $rootScope.userUnderChat.username) {
+                        //extract and push at top
+                        $rootScope.chatList.splice(i, 1);
+                        $rootScope.chatList.unshift(obj);
+                    }
+                    if (obj.username != $rootScope.userUnderChat.username) {
+                        obj.newMessagesCount += 1;
+                    }
                     break;
                 }
             }
             if (found == 0) {
-                var tempObject = {};
-                tempObject.username = username;
-                tempObject.message = [];
-                tempObject.message.push(message);
-                $rootScope.chatList.push(tempObject);
-                $scope.userUnderChat = tempObject;
+                sender.message = [];
+                sender.message.push(messageObject);
+                //push at top
+                $rootScope.chatList.unshift(sender);
+                if (!$rootScope.userUnderChat.hasOwnProperty('username') || $rootScope.userUnderChat.message.length == 0) {
+                    $rootScope.userUnderChat = sender;
+                    sender.newMessagesCount = 0;
+                } else {
+                    sender.newMessagesCount = 1;
+                }
             }
             $scope.$apply();
         }

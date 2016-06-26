@@ -5,9 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0">
         <meta name="description" content="Anonymous chat application">
+        <meta name="keywords" content="Anonymous chatting| Random chatting| Alley| Online chatting to strangers">
+        <meta name="robots" content="index, follow" />
         <meta name="author" content="varunon9">
         <title>Alley - Anonymous chat application</title>
-        <link rel="shortcut icon" href="images/logo.png">
         <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -21,13 +22,13 @@
                             <i class="material-icons" ng-click="toggleSidenav();">
                                 dehaze
                             </i>
-                            <span>Alley</span>
+                            <span><a href="#about">Alley</a></span>
                         </div>
                         <div class="greeting">
                             Welcome {{user.username}}
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span ng-if="user.username != 'Guest'">
-                                <a href="/logout">Logout</a>
+                                <a href="" ng-click="logout()">Logout</a>
                             </span>
                         </div>
                     </div>
@@ -43,7 +44,8 @@
                         </div>
                         <md-list layout="column">
                             <md-list-item class="md-2-line" ng-repeat="onlineUser in onlineUsers | filter: searchInput " ng-click="chatToOnlineUser(onlineUser)">
-                                <img ng-src="{{onlineUser.face}}" class="md-avatar" alt="{{onlineUser.username}}">
+                                <img ng-src="{{onlineUser.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
+                                     class="md-avatar" alt="{{onlineUser.username}}">
                                 <div class="md-list-item-text">
                                     <h3>{{onlineUser.username}}</h3>
                                     <h4>{{onlineUser.gender}} {{onlineUser.age}}</h4>
