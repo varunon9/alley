@@ -111,7 +111,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
     .controller('aboutController', function ($rootScope, $scope, $http, $location) {
 
     })
-    .controller('chatController', function ($rootScope, $scope, $http, $location) {
+    .controller('chatController', function ($rootScope, $scope, $http, $location, $mdSidenav) {
         $rootScope.userUnderChat = {};
         $scope.connect = function (user) {
             user.newMessagesCount = 0;
@@ -146,7 +146,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
                 messageObject.class = 'client';
                 $rootScope.userUnderChat.message.push(messageObject);
             } else {
-                $rootScope.alert('Please select any user to chat', 3000);
+                $rootScope.alert('Please select any user to chat from your chat list', 3000);
             }
         };
         $rootScope.socket.on('chatFromServer', function (sender, message) {
@@ -184,5 +184,8 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
             }
             $scope.$apply();
         }
+        $scope.toggleHiddenSidenav = function () {
+            $mdSidenav('hiddenLeftSidenav').toggle();
+        };
     });
 

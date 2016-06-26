@@ -53,7 +53,7 @@ i:focus {
 }
 .greeting {
 	position: absolute;
-	top: 20%;
+	top: 24%;
 	right: 5%;
 }
 
@@ -94,6 +94,10 @@ header a {
     height: 100%;
     border-right: 1px solid silver;
 }
+#hiddenListIcon {
+    display: none;
+    padding: 2px;
+}
 #chatBox {
     position: relative;
 	width: 79%;
@@ -111,6 +115,7 @@ header a {
 .md-subheader h3 {
     padding: 0;
     margin: 0;
+    font-size: 1.3em;
 }
 #typeHere {
     position: absolute;
@@ -211,13 +216,16 @@ header a {
     font-weight: bold;
     font-size: 1.1em;
 }
-.md-list-item-text h3 span {
+.list-item span {
     color: #3F51B5;
+    position: absolute;
+    right: 2%;
+    z-index:10;
 }
-.md-list-item-text h3 span:hover {
+.list-item span:hover {
     color: #f44336;
 }
-.md-list-item-text h3 span i {
+.list-item span i {
     background: white;
     border-radius: 50%;
 }
@@ -232,8 +240,88 @@ header a {
 }
 
 /*media query*/
+@media (max-width: 425px) {
+    body {
+        font-size: .8em;
+    }
+    #chatMessages p {
+        padding: 5px;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+    .server::after {
+        border: 10px solid;
+        border-color: #cca transparent transparent;
+    }
+    .client::before {
+        border: 10px solid;
+        border-color: #ccc transparent transparent;
+    }
+    .md-toolbar-tools {
+        font-size: 12px;
+    }
+    .logoAndMenu span {
+        position: absolute;
+        top: 3px;
+        right: -41px;
+    }
+    .md-list-item-text h4{
+        font-size: 12px !important;
+    }
+    .md-list-item-text h3{
+        font-size: 14px !important;
+    }
+    #navigation md-list-item {
+        height: 55px !important;
+        min-height: 55px !important;
+    }
+    .md-avatar {
+        width: 37px !important;
+        height: 37px !important;
+    }
+    .md-subheader h3 {
+        font-size: .9em;
+    }
+    #signupForm {
+        width: 80%;
+        margin-left: 10%;
+    }
+    /*hidden side nav  */
+    #hiddenListIcon {
+        display: block;
+    }
+    #chatList md-list {
+        display: none;
+    }
+    #chatList {
+        width: 9%;
+    }
+    #chatBox {
+        width: 90%;
+    }
+    #typeHere {
+        width: 97.5%;
+    }
+    #typeHere i {
+        margin-top: 13px;
+    }
+    #typeHere form {
+        width: 90%;
+    }
+}
+@media (max-width: 375px) {
+    body {
+        font-size: .7em;
+    }
+    #typeHere i {
+        margin-top: 10px;
+    }
+}
 @media (max-width: 320px) {
     body {
         font-size: .6em;
+    }
+    #typeHere i {
+        margin-top: 8px;
     }
 }

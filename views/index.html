@@ -15,7 +15,7 @@
     </head>
     <body>
         <div layout="column" style="height: 100%;">
-            <div ng-controller="navigationController" ng-cloak>
+            <div ng-controller="navigationController" ng-cloak id="navigation">
                 <md-toolbar class="md-primary">
                     <div class="md-toolbar-tools">
                         <div class="logoAndMenu">
@@ -25,7 +25,7 @@
                             <span><a href="#about">Alley</a></span>
                         </div>
                         <div class="greeting">
-                            Welcome {{user.username}}
+                            Welcome {{user.username}} !
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span ng-if="user.username != 'Guest'">
                                 <a href="" ng-click="logout()">Logout</a>

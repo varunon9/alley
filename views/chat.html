@@ -1,24 +1,56 @@
 <div id="chat">
+    <div id="hiddenChatList">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="hiddenLeftSidenav">
+            <md-list flex>
+                <md-subheader class="md-no-sticky">
+                    <h3>Your Chat list</h3>
+                </md-subheader>
+                <div ng-repeat="user in chatList" class="list-item">
+                    <span ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
+                    <md-list-item class="md-2-line"
+                                  ng-class="{'userUnderChat': user.username == userUnderChat.username}"
+                                  ng-click="connect(user); toggleHiddenSidenav();">
+                        <img ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
+                             class="md-avatar" alt="{{user.username}}" />
+                        <div class="md-list-item-text">
+                            <h3>
+                                {{user.username}}&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h3>
+                            <h4>{{user.gender}} &nbsp;&nbsp;{{user.age}} &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span ng-if="!user.newMessagesCount == 0">{{user.newMessagesCount}}</span>
+                            </h4>
+                        </div>
+                    </md-list-item>
+                </div>
+            </md-list>
+        </md-sidenav>
+    </div>
     <div id="chatList">
+        <div id="hiddenListIcon">
+            <i class="material-icons" ng-click="toggleHiddenSidenav()">list</i>
+        </div>
         <md-list flex>
             <md-subheader class="md-no-sticky">
                 <h3>Your Chat list</h3>
             </md-subheader>
-        <md-list-item class="md-2-line" ng-repeat="user in chatList"
-                      ng-class="{'userUnderChat': user.username == userUnderChat.username}"
-                      ng-click="connect(user);">
-            <img ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
-                 class="md-avatar" alt="{{user.username}}" />
-            <div class="md-list-item-text">
-                <h3>
-                    {{user.username}}&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
-                </h3>
-                <h4>{{user.gender}} &nbsp;&nbsp;{{user.age}} &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span ng-if="!user.newMessagesCount == 0">{{user.newMessagesCount}}</span>
-                </h4>
+            <div ng-repeat="user in chatList" class="list-item">
+                <span ng-click="disconnect(user, $event);"><i class="material-icons">close</i></span>
+                <md-list-item class="md-2-line"
+                              ng-class="{'userUnderChat': user.username == userUnderChat.username}"
+                              ng-click="connect(user);">
+                    <img ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
+                         class="md-avatar" alt="{{user.username}}" />
+                    <div class="md-list-item-text">
+                        <h3>
+                            {{user.username}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        </h3>
+                        <h4>{{user.gender}} &nbsp;&nbsp;{{user.age}} &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span ng-if="!user.newMessagesCount == 0">{{user.newMessagesCount}}</span>
+                        </h4>
+                    </div>
+                </md-list-item>
             </div>
-        </md-list-item>
+        </md-list>
     </div>
     <div id="chatBox">
         <div id="username">Chatting with {{userUnderChat.username}}</div>
