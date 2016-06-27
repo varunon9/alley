@@ -55,7 +55,7 @@
     <div id="chatBox">
         <div id="username">Chatting with {{userUnderChat.username}}</div>
         <div id="chatMessages">
-            <p ng-repeat="message in userUnderChat.message" ng-class="message.class">
+            <p ng-repeat="message in userUnderChat.message track by $index" ng-class="message.class">
                 {{message.value}}
                 <span class="time">
                     {{message.time | date: 'h:mm a'}}

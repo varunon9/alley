@@ -17,7 +17,7 @@ module.exports = function (app) {
         var successCallback = function () {
             res.cookie('username', user.username, {
                 signed: true,
-                maxAge: 3 * 30 * 24 * 3600
+                maxAge: 12 * 30 * 24 * 3600 * 1000
             });
             res.send('success');
         };
@@ -28,9 +28,6 @@ module.exports = function (app) {
     });
     app.get('/logout', function (req, res) {
         var username = req.signedCookies.username;
-        if (username) {
-            redisApi.deleteUserIdRedis(username);
-        }
         var successCallback = function () {
             res.clearCookie('username');
             res.send({message: 'success'});

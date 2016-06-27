@@ -7,6 +7,12 @@ var navigation = angular.module('navigation', ['ngMaterial']);
 navigation.controller('navigationController', function ($rootScope, $scope, $http, $window, $mdSidenav, $window) {
     $rootScope.socket.on('connect', function () {
        console.log('connected');
+        if ($rootScope.user.hasOwnProperty('username')) {
+            var username = $rootScope.user.username;
+            if (username != 'Guest') {
+                $rootScope.socket.emit('makeUsernameIdPair', $rootScope.user);
+            }
+        }
     });
     $rootScope.socket.on('newUserConnected', function (user) {
         user.message = [];
