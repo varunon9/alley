@@ -122,25 +122,39 @@ header a {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 98.5%;
-    padding: 2px;
+    width: 98%;
     border: 1px solid silver;
     height: 9%;
 }
-#typeHere i {
-    margin-top: 17px;
-}
-#typeHere form {
-    display: inline;
+.emojiLeft, .emojiRight, .typeForm {
+    position: absolute;
+    top: 0;
     height: 100%;
-    margin: 0;
-    padding: 0;
-    float: right;
-    width: 94%;
-    margin-right: 1%;
+}
+.emojiLeft, .emojiRight {
+    width: 6%;
+}
+.emojiLeft {
+    left: 2%;
+}
+.emojiRight {
+    right: 0;
+}
+.typeForm {
+    left: 6%;
+    width: 88%;
+    height: 96%;
+    display: inline;
+}
+.typeForm form {
+    margin: 0 1% 0 1%;
+    width: 98%;
+    height: 100%;
+}
+#typeHere i {
+    margin-top: 13px;
 }
 #typeHere input[type="text"] {
-    margin-left: 1%;
     width: 100%;
     height: 100%;
     background: #eee;
@@ -300,14 +314,21 @@ header a {
     #chatBox {
         width: 90%;
     }
-    #typeHere {
-        width: 97.5%;
+    .emojiLeft {
+        left: 0;
+    }
+    .emojiLeft, .emojiRight {
+        width: 10%;
+    }
+    .typeForm {
+        left: 10%;
+        width: 80%;
     }
     #typeHere i {
-        margin-top: 13px;
+        margin-top: 6px;
     }
-    #typeHere form {
-        width: 88%;
+    .typeForm form {
+        height: 90%;
     }
 }
 @media (max-width: 375px) {
@@ -320,18 +341,9 @@ header a {
     #chatMessages p {
         margin-right: 6%;
     }
-    #typeHere i {
-        margin-top: 10px;
-    }
-    #typeHere form {
-        width: 83%;
-    }
 }
 @media (max-width: 320px) {
     body {
         font-size: .6em;
-    }
-    #typeHere i {
-        margin-top: 8px;
     }
 }

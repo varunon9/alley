@@ -25,6 +25,25 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         	redirectTo : '/'
         });
     })
+    .directive('scrollToBottom', function () {
+        return {
+            scope: {
+                scrollToBottom: '='
+            },
+            link: function (scope, element) {
+                scope.$watchCollection('scrollToBottom', function (newValue) {
+                    if (newValue) {
+                        //$(element).scrollTop($(element[0]).scrollHeight);
+                        var chatMessageDiv = document.getElementById(element[0].id);
+                        chatMessageDiv.scrollTop = chatMessageDiv.scrollHeight - chatMessageDiv.clientHeight;
+                        setTimeout(function () {
+                            chatMessageDiv.scrollTop = chatMessageDiv.scrollHeight - chatMessageDiv.clientHeight;
+                        }, 100);
+                    }
+                });
+            }
+        }
+    })
     .run(function ($rootScope, $mdToast, $location, $http) {
         $rootScope.socket = io();
         //array of objects
@@ -112,7 +131,6 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
 
     })
     .controller('chatController', function ($rootScope, $scope, $http, $location, $mdSidenav) {
-        var chatMessagesDiv = angular.element(document).find('#chatMessagesDiv');
         $rootScope.userUnderChat = {};
         $scope.connect = function (user) {
             user.newMessagesCount = 0;

@@ -54,7 +54,7 @@
     </div>
     <div id="chatBox">
         <div id="username">Chatting with {{userUnderChat.username}}</div>
-        <div id="chatMessages">
+        <div id="chatMessages" scroll-to-bottom="userUnderChat.message">
             <p ng-repeat="message in userUnderChat.message track by $index" ng-class="message.class">
                 {{message.value}}
                 <span class="time">
@@ -63,10 +63,17 @@
             </p>
         </div>
         <div id="typeHere">
-            <i class="material-icons" style="vertical-align: text-top;">chat</i>
-            <form ng-submit="sendMessage();">
-                <input ng-model="typedMessage.value" type="text" placeholder="start typing your message" style="border: none;">
-            </form>
+            <div class="emojiLeft">
+                <i class="material-icons">face</i>
+            </div>
+            <div class="typeForm">
+                <form ng-submit="sendMessage();">
+                    <input ng-model="typedMessage.value" type="text" placeholder="start typing your message" style="border: none;">
+                </form>
+            </div>
+            <div class="emojiRight">
+                <i class="material-icons">attachment</i>
+            </div>
         </div>
     </div>
 </div>
