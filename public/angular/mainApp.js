@@ -132,6 +132,8 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
     })
     .controller('chatController', function ($rootScope, $scope, $http, $location, $mdSidenav) {
         $rootScope.userUnderChat = {};
+        $scope.typedMessage = {};
+        $scope.typedMessage.value = '';
         $scope.connect = function (user) {
             user.newMessagesCount = 0;
             $rootScope.userUnderChat = user;
@@ -151,7 +153,6 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
             $rootScope.chatList.splice(i, 1);
         };
         $scope.sendMessage = function () {
-            //scrollToBottom();
             if ($rootScope.userUnderChat.hasOwnProperty('username')) {
                 var message = $scope.typedMessage.value;
                 $scope.typedMessage.value = '';
@@ -171,7 +172,6 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         };
         $rootScope.socket.on('chatFromServer', function (sender, message) {
             checkAndPushMessage(sender, message);
-            //scrollToBottom();
         });
         function checkAndPushMessage (sender, messageObject) {
             var found = 0;
@@ -208,11 +208,16 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         $scope.toggleHiddenSidenav = function () {
             $mdSidenav('hiddenLeftSidenav').toggle();
         };
-        function scrollToBottom () {
-            var isScrolledToBottom = chatMessagesDiv.scrollHeight - chatMessagesDiv.clientHeight <= chatMessagesDiv.scrollTop + 1;
-            if (!isScrolledToBottom) {
-                chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight - chatMessagesDiv.clientHeight;
-            }
+        //code for emoticons
+        $scope.showEmoticonsDialog = false;
+        $scope.emoticons = [
+            '😀', '😁', '😂', '😃', '😄', '😅', '😆', '😇', '😉', '😊',
+            '😋', '😌', '😍', '😘', '😗', '😎', '😏', '😶', '😐', '😑', '😒', '😳',
+            '😞', '😟 ', '😠', '😡', '☹️', '😖', '😩', '😮', '😱', '😰', '😢', '😵', '😷', '😴', '😈',
+            '😻', '😾', '😸', '☘', '☀️', '☃️', '☕️', '❤️', '✌️', '✋', '🐵', '🐮', '✈️'
+        ];
+        $scope.selectEmoticon = function (emoji) {
+            $scope.typedMessage.value += emoji;
         }
     });
 

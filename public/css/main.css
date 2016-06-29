@@ -134,6 +134,9 @@ header a {
 .emojiLeft, .emojiRight {
     width: 6%;
 }
+.emojiLeft:focus, .emojiRight:focus {
+    outline: none;
+}
 .emojiLeft {
     left: 2%;
 }
@@ -254,6 +257,45 @@ header a {
     color: #3f51b5;
 }
 
+/*emoticons*/
+#emoticonsDialog {
+    position: fixed;
+    top: 50%;
+    left: 20.7%;
+    width: 33%;
+    height: 30%;
+    padding: 1%;
+    background: silver;
+    overflow: hidden;
+}
+#emoticonsDialog i {
+    float: right;
+    color: #3f51b5;
+    margin-bottom: 2%;
+    background: white;
+    border-radius: 50%;
+}
+#emoticonsDialog i:hover {
+    color: #37474F;
+}
+#emojiContainer {
+    width: 100%;
+    clear: both;
+    text-align: justify;
+    word-wrap: break-word;
+}
+#emojiContainer span {
+    margin: 1%;
+    font-size: 1.5em;
+    color: #3f51b5;
+    cursor: pointer;
+}
+#emojiContainer span:hover {
+    color: #37474F;
+}
+#emojiContainer span:focus {
+    outline: none;
+}
 /*media query*/
 @media (max-width: 425px) {
     body {
@@ -329,6 +371,12 @@ header a {
     }
     .typeForm form {
         height: 90%;
+    }
+    #emoticonsDialog {
+        top: 47%;
+        left: 10%;
+        width: 78%;
+        height: 30%;
     }
 }
 @media (max-width: 375px) {

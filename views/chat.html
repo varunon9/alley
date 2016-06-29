@@ -63,7 +63,7 @@
             </p>
         </div>
         <div id="typeHere">
-            <div class="emojiLeft">
+            <div class="emojiLeft" ng-click="showEmoticonsDialog = true">
                 <i class="material-icons">face</i>
             </div>
             <div class="typeForm">
@@ -71,9 +71,16 @@
                     <input ng-model="typedMessage.value" type="text" placeholder="start typing your message" style="border: none;">
                 </form>
             </div>
-            <div class="emojiRight">
+            <div class="emojiRight" ng-click="showFileUploadDialog();">
                 <i class="material-icons">attachment</i>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="emoticonsDialog" ng-show="showEmoticonsDialog">
+    <i class="material-icons" ng-click="showEmoticonsDialog = false">close</i>
+    <div id="emojiContainer">
+        <span ng-repeat="e in emoticons" ng-click="selectEmoticon(e)">{{e}}</span>
     </div>
 </div>
