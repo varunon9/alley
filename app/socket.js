@@ -13,6 +13,7 @@ module.exports = function(ioServer, socket) {
     delivery.on('receive.success', function (file) {
         var sender = file.params.sender;
         var receiver = file.params.receiver;
+        console.log('Received ' + file.name + ' from ' + sender.username + ' to ' + receiver.username);
         var callback = function (id) {
             ioServer.to(id).emit('fileFromServer', file);
         };
