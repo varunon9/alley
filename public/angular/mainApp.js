@@ -23,7 +23,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
             controller: 'aboutController'
         })
         .otherwise({ 
-        	redirectTo : '/'
+        	redirectTo : '/about'
         });
     })
     .directive('scrollToBottom', function () {
@@ -53,6 +53,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         $rootScope.delivery;
         $rootScope.uploadProgress = false;
         $rootScope.showFileUploadDialog = false;
+        $rootScope.firstTimeUser = true;
         //array of objects
         $rootScope.chatList = [];
         var alleyUser = lsGet('alleyUser');
@@ -85,7 +86,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
                     $rootScope.user = {
                         username: 'Guest'
                     };
-                    $location.path('/signup');
+                    $location.path('/about');
                 }
             }, function errorCallback (response) {
                 console.log('error in getting username: ' + response);
@@ -140,7 +141,13 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         });
     })
     .controller('aboutController', function ($rootScope, $scope, $http, $location) {
-
+        setTimeout(function () {
+            if ($rootScope.firstTimeUser) {
+                $rootScope.firstTimeUser = false;
+                $location.path('/signup');
+                $scope.$apply();
+            }
+        }, 3000);
     })
     .controller('chatController', function ($rootScope, $scope, $http, $location, $mdSidenav) {
         $rootScope.userUnderChat = {};
