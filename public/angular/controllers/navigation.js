@@ -1,6 +1,7 @@
 /**
     * Created by: Varun kumar
     * Date: 30 march, 2016
+    * Hire me. Contact: varunon9@gmail.com
 **/
 var navigation = angular.module('navigation', ['ngMaterial']);
 

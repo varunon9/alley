@@ -1,6 +1,7 @@
 /**
     * Created by: Varun kumar
     * Date: 25 april, 2016
+    * Hire me. Contact: varunon9@gmail.com
 **/
 
 var mongoApi = require('../database');

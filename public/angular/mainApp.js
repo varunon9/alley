@@ -1,6 +1,7 @@
 /**
     * Created by: Varun kumar
     * Date: 30 march, 2016
+    * Hire me. Contact: varunon9@gmail.com
 **/
 var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
     .config(function ($routeProvider, $locationProvider) {
@@ -45,6 +46,9 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         }
     })
     .run(function ($rootScope, $mdToast, $location, $http) {
+        var message = 'Hi! Thanks for your interest in Alley. Are you an employer? I am looking for new opportunities.'
+        message += 'Contact me: varunon9@gmail.com';
+        console.log(message);
         $rootScope.socket = io();
         $rootScope.delivery;
         $rootScope.uploadProgress = false;
