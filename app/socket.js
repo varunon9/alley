@@ -5,9 +5,22 @@
 
 var mongoApi = require('./database');
 var redisApi = require('./redis');
+var dl = require('delivery');
 
 module.exports = function(ioServer, socket) {
 	console.log('A connection made by ' + socket.id);
+    var delivery = dl.listen(socket);
+    delivery.on('receive.success', function (file) {
+        var sender = file.params.sender;
+        var receiver = file.params.receiver;
+        var callback = function (id) {
+            ioServer.to(id).emit('fileFromServer', file);
+        };
+        var callbackValidate = function () {
+            redisApi.getUserIdRedis(receiver.username, callback);
+        };
+        redisApi.doesUserExist(sender.username, callbackValidate);
+    });
 	socket.on('makeUsernameIdPair', function (user) {
 		var username = user.username;
 		mongoApi.updateUserStatus(username, true);

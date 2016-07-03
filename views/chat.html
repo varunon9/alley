@@ -56,7 +56,8 @@
         <div id="username">Chatting with {{userUnderChat.username}}</div>
         <div id="chatMessages" scroll-to-bottom="userUnderChat.message">
             <p ng-repeat="message in userUnderChat.message track by $index" ng-class="message.class">
-                {{message.value}}
+                <span ng-if="!message.displayAsHtml">{{message.value}}</span>
+                <span ng-if="message.displayAsHtml" ng-bind-html="message.value | toTrusted"></span>
                 <span class="time">
                     {{message.time | date: 'h:mm a'}}
                 </span>
@@ -71,7 +72,7 @@
                     <input ng-model="typedMessage.value" type="text" placeholder="start typing your message" style="border: none;">
                 </form>
             </div>
-            <div class="emojiRight" ng-click="showFileUploadDialog();">
+            <div class="emojiRight" ng-click="$root.showFileUploadDialog = true;">
                 <i class="material-icons">attachment</i>
             </div>
         </div>
@@ -83,4 +84,20 @@
     <div id="emojiContainer">
         <span ng-repeat="e in emoticons" ng-click="selectEmoticon(e)">{{e}}</span>
     </div>
+</div>
+
+<div id="fileDialog" ng-show="showFileUploadDialog">
+        <p>
+            <i class="material-icons" ng-click="$root.showFileUploadDialog = false">close</i>
+        </p>
+        <p>
+            Upload File
+        </p>
+        <p>
+            <input id="fileInput" type="file" onchange="updateFileToBeUploaded(event)">
+        </p>
+        <md-button class="md-raised md-primary" ng-click="uploadFile()" ng-disabled="$root.uploadProgress">
+            Upload
+        </md-button>
+    </md-content>
 </div>

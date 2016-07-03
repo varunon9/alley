@@ -268,14 +268,14 @@ header a {
     background: silver;
     overflow: hidden;
 }
-#emoticonsDialog i {
+#emoticonsDialog i, #fileDialog i {
     float: right;
     color: #3f51b5;
     margin-bottom: 2%;
     background: white;
     border-radius: 50%;
 }
-#emoticonsDialog i:hover {
+#emoticonsDialog i:hover, #fileDialog i:hover {
     color: #37474F;
 }
 #emojiContainer {
@@ -295,6 +295,32 @@ header a {
 }
 #emojiContainer span:focus {
     outline: none;
+}
+#fileDialog {
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    height: 20%;
+    width: 40%;
+    padding: 1%;
+    z-index: 11;
+    background: silver;
+    text-align: center;
+    color: #3f51b5;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+#fileDialog md-content {
+    background: silver;
+}
+#fileInput:focus {
+    outline: none;
+}
+#chatMessages a {
+    color: #3f51b5;
+    text-decoration: underline;
+}
+#chatMessages img {
+    max-width: 40%;
 }
 /*media query*/
 @media (max-width: 425px) {
@@ -377,6 +403,16 @@ header a {
         left: 10%;
         width: 78%;
         height: 30%;
+    }
+    #fileDialog {
+        top: 20%;
+        height: 30%;
+        left: 15%;
+        width: 70%;
+    }
+    #fileDialog .md-button {
+        min-width: 65px;
+        font-size: 12px;
     }
 }
 @media (max-width: 375px) {

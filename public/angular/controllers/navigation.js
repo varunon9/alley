@@ -13,6 +13,12 @@ navigation.controller('navigationController', function ($rootScope, $scope, $htt
                 $rootScope.socket.emit('makeUsernameIdPair', $rootScope.user);
             }
         }
+        $rootScope.delivery = new Delivery($rootScope.socket);
+        $rootScope.delivery.on('send.success', function (fileUID) {
+            $rootScope.uploadProgress = false;
+            $rootScope.alert('Successfully sent ' + fileUID.name, 3000);
+            $rootScope.showFileUploadDialog = false;
+        });
     });
     $rootScope.socket.on('newUserConnected', function (user) {
         user.message = [];

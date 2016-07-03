@@ -46,6 +46,9 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
     })
     .run(function ($rootScope, $mdToast, $location, $http) {
         $rootScope.socket = io();
+        $rootScope.delivery;
+        $rootScope.uploadProgress = false;
+        $rootScope.showFileUploadDialog = false;
         //array of objects
         $rootScope.chatList = [];
         var alleyUser = lsGet('alleyUser');
@@ -107,6 +110,11 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
             }
         });
     })
+    .filter('toTrusted', function ($sce) {
+        return function (text) {
+            return $sce.trustAsHtml(text);
+        };
+    })
     .controller('homeController', function ($rootScope, $http, $location) {
         var reqUserDetails = {
             method: 'POST',
@@ -161,7 +169,8 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
                 var messageObject = {
                     value: message,
                     class: 'server',
-                    time: new Date()
+                    time: new Date(),
+                    displayAsHtml: false
                 };
                 $rootScope.socket.emit('chatFromClient', sender, receiver, messageObject);
                 messageObject.class = 'client';
@@ -219,5 +228,61 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         $scope.selectEmoticon = function (emoji) {
             $scope.typedMessage.value += emoji;
         }
+        $scope.uploadFile = function () {
+            if ($rootScope.userUnderChat.hasOwnProperty('username')) {
+                if (file) {
+                    $rootScope.delivery.send(file, {sender: $rootScope.user, receiver: $rootScope.userUnderChat, time: new Date()});
+                    $rootScope.uploadProgress = true;
+                    var typeOfFile = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+                    if (typeOfFile == 'gif' || typeOfFile == 'png' || typeOfFile == 'jpg' || typeOfFile == 'jpeg') {
+                        typeOfFile = 'image';
+                    }
+                    var href = window.URL.createObjectURL(file);
+                    var messageObject = {
+                        value: '',
+                        class: 'client',
+                        time: new Date(),
+                        displayAsHtml: true
+                    };
+                    if (typeOfFile == 'image') {
+                        messageObject.value = '<img src="' + href + '"/>';
+                    } else {
+                        messageObject.value = '<a href="' + href + '" download="' + file.name + '" >' + file.name + '</a>';
+                    }
+                    $rootScope.userUnderChat.message.push(messageObject);
+                } else {
+                    $rootScope.alert('No file Selected', 3000);
+                }
+            } else {
+                $rootScope.alert('Please select any user to chat from your chat list', 3000);
+            }
+        };
+        $rootScope.socket.on('fileFromServer', function (file) {
+            var sender = file.params.sender;
+            var typeOfFile = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+            if (typeOfFile == 'gif' || typeOfFile == 'png' || typeOfFile == 'jpg' || typeOfFile == 'jpeg') {
+                typeOfFile = 'image';
+            }
+            var byteArray = new Uint8Array(file.buffer);
+            var href = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' }));
+            var download = file.name;
+            var anchor = '<a href="' + href + '" download="' + download + '">' + download + '</a>';
+            var messageObject = {
+                value: '',
+                class: 'server',
+                time: file.params.time,
+                displayAsHtml: true
+            };
+            if (typeOfFile == 'image') {
+                messageObject.value = '<img src="' + href + '"/>';
+            } else {
+                messageObject.value = '<a href="' + href + '" download="' + file.name + '" >' + file.name + '</a>';
+            }
+            checkAndPushMessage(sender, messageObject);
+        });
     });
+var file;
+var updateFileToBeUploaded = function (event) {
+    file = document.getElementById('fileInput').files[0];
+};
 
