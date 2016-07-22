@@ -238,7 +238,7 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         ];
         $scope.selectEmoticon = function (emoji) {
             $scope.typedMessage.value += emoji;
-        }
+        };
         $scope.uploadFile = function () {
             if ($rootScope.userUnderChat.hasOwnProperty('username')) {
                 if (file) {

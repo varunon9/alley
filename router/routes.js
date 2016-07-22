@@ -8,7 +8,7 @@ var redisApi = require('../app/redis');
 module.exports = function (app) {
 	app.get('/', function (req, res) {
         var username = req.signedCookies.username;
-        console.log(username + ' from route');
+        console.log(username + ' from route', new Date());
         /*if (username != null) {
             //to prevent opening of multiple tabs
             var callback = function (id) {

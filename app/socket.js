@@ -8,7 +8,7 @@ var redisApi = require('./redis');
 var dl = require('delivery');
 
 module.exports = function(ioServer, socket) {
-	console.log('A connection made by ' + socket.id);
+	//console.log('A connection made by ' + socket.id);
     var delivery = dl.listen(socket);
     delivery.on('receive.success', function (file) {
         var sender = file.params.sender;
