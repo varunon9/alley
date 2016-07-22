@@ -35,7 +35,7 @@ module.exports = function(ioServer, socket) {
         redisApi.broadcastIfUserIsNew(username, broadcastCallback, addCallback);
 	});
 	socket.on('disconnect', function() {
-	    console.log(socket.id + " disconnected");
+	    //console.log(socket.id + " disconnected");
 	    var callback = function (username) {
 	    	socket.broadcast.emit('userDisconnected', username);
 	    	mongoApi.updateUserStatus(username, false);
