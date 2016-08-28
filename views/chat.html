@@ -10,8 +10,11 @@
                     <md-list-item class="md-2-line"
                                   ng-class="{'userUnderChat': user.username == userUnderChat.username}"
                                   ng-click="connect(user); toggleHiddenSidenav();">
-                        <img ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
+                        <img ng-if="user.username != $root.alleyBot.username"
+                             ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
                              class="md-avatar" alt="{{user.username}}" />
+                        <img ng-if="user.username == $root.alleyBot.username" src="images/alley-bot.png"
+                             class="md-avatar" alt="{{user.username}}"/>
                         <div class="md-list-item-text">
                             <h3>
                                 {{user.username}}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,8 +41,11 @@
                 <md-list-item class="md-2-line"
                               ng-class="{'userUnderChat': user.username == userUnderChat.username}"
                               ng-click="connect(user);">
-                    <img ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
+                    <img ng-if="user.username != $root.alleyBot.username"
+                         ng-src="{{user.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
                          class="md-avatar" alt="{{user.username}}" />
+                    <img ng-if="user.username == $root.alleyBot.username" src="images/alley-bot.png"
+                         class="md-avatar" alt="{{user.username}}"/>
                     <div class="md-list-item-text">
                         <h3>
                             {{user.username}}&nbsp;&nbsp;&nbsp;&nbsp;

@@ -49,6 +49,9 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
         var message = 'Hi! Thanks for your interest in Alley. Are you an employer? I am looking for new opportunities.'
         message += 'Contact me: varunon9@gmail.com';
         console.log(message);
+        $rootScope.alleyBot = {
+            username: 'alley-bot'
+        };
         $rootScope.socket = io();
         $rootScope.delivery;
         $rootScope.uploadProgress = false;
@@ -240,7 +243,9 @@ var mainApp = angular.module('mainApp', ['ngRoute', 'navigation', 'signup'])
             $scope.typedMessage.value += emoji;
         };
         $scope.uploadFile = function () {
-            if ($rootScope.userUnderChat.hasOwnProperty('username')) {
+            if ($rootScope.userUnderChat.hasOwnProperty('username') && ($rootScope.userUnderChat.username == $rootScope.alleyBot.username)) {
+                $rootScope.alert('Alley-bot cannot read your file', 3000);
+            } else if ($rootScope.userUnderChat.hasOwnProperty('username')) {
                 if (file) {
                     $rootScope.delivery.send(file, {sender: $rootScope.user, receiver: $rootScope.userUnderChat, time: new Date()});
                     $rootScope.uploadProgress = true;

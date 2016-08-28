@@ -23,6 +23,10 @@ signup.controller('signupController', function ($scope, $http, $window, $rootSco
 			$rootScope.alert('Please fill all the details correctly', 3000);
 			return;
 		}
+		if ($scope.signupUser.username == $rootScope.alleyBot.username) {
+			$rootScope.alert('Please choose a different username.', 3000);
+			return;
+		}
         $scope.disableSubmitButton = true;
     	reqUserSignup.data.user = $scope.signupUser;
     	$http(reqUserSignup).then(function successCallback (response) {

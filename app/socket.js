@@ -6,6 +6,7 @@
 var mongoApi = require('./database');
 var redisApi = require('./redis');
 var dl = require('delivery');
+var alleyBot = require('./alleyBot');
 
 module.exports = function(ioServer, socket) {
 	//console.log('A connection made by ' + socket.id);
@@ -44,12 +45,21 @@ module.exports = function(ioServer, socket) {
 	    redisApi.getUsernameRedis(socket.id, callback);
 	});
 	socket.on('chatFromClient', function (sender, receiver, message) {
-        var callback = function (id) {
-            ioServer.to(id).emit('chatFromServer', sender, message);
-        };
-        var callbackValidate = function () {
-            redisApi.getUserIdRedis(receiver.username, callback);
-        };
-        redisApi.doesUserExist(sender.username, callbackValidate);
+        if (receiver.username != 'alley-bot') {
+            var callback = function (id) {
+                ioServer.to(id).emit('chatFromServer', sender, message);
+            };
+            var callbackValidate = function () {
+                redisApi.getUserIdRedis(receiver.username, callback);
+            };
+            redisApi.doesUserExist(sender.username, callbackValidate);
+        } else {
+            var callback = function (message) {
+                message.time = new Date();
+                //sending back to same user
+                ioServer.to(socket.id).emit('chatFromServer', receiver, message);
+            };
+            alleyBot.reply(callback, message);
+        }
 	});
-}
+};

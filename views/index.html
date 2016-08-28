@@ -56,6 +56,13 @@
                             <input ng-model="searchInput" type="text" placeholder="search users" style="border: none;">
                         </div>
                         <md-list layout="column">
+                            <md-list-item class="md-2-line" ng-click="chatToOnlineUser($root.alleyBot)">
+                                <img src="images/alley-bot.png"
+                                     class="md-avatar" alt="{{$root.alleyBot.username}}">
+                                <div class="md-list-item-text">
+                                    <h3>{{$root.alleyBot.username}}</h3>
+                                </div>
+                            </md-list-item>
                             <md-list-item class="md-2-line" ng-repeat="onlineUser in onlineUsers | filter: searchInput " ng-click="chatToOnlineUser(onlineUser)">
                                 <img ng-src="{{onlineUser.gender == 'male' && 'images/male.svg' || 'images/female.svg'}}"
                                      class="md-avatar" alt="{{onlineUser.username}}">
