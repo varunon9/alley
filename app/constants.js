@@ -4,8 +4,8 @@
 
 var constants = {
     mysqlHost: 'localhost',
-    mysqlUsername: 'root',
-    mysqlPassword: 'S0mething',
+    mysqlUsername: 'user',
+    mysqlPassword: 'password',
     mysqlDatabase: 'alleyBot',
     INTERROGATIVE: 'interrogative',
     ASSERTIVE: 'assertive',
